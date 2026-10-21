@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-script: "Caveat", "Segoe Print", cursive;
+
+  /* Deep forest greens: brand + text on light surfaces */
+  --color-forest-50: #eef5f0;
+  --color-forest-100: #d9e9de;
+  --color-forest-200: #b5d3bf;
+  --color-forest-300: #86b598;
+  --color-forest-500: #3d7a57;
+  --color-forest-600: #2b6345;
+  --color-forest-700: #1f4f37;
+  --color-forest-800: #17412d;
+  --color-forest-900: #12372a;
+  --color-forest-950: #0a2219;
+
+  /* Fresh leaf accent: highlights on dark surfaces, badges */
+  --color-leaf-100: #eef8de;
+  --color-leaf-200: #d8efb7;
+  --color-leaf-300: #b6e388;
+  --color-leaf-400: #9bd164;
+  --color-leaf-500: #7cb446;
+
+  --color-mist: #f2f5f1;
+  --color-ink: #10231a;
+  --color-sun: #f5b52e;
+
+  --shadow-card: 0 1px 2px rgb(16 35 26 / 0.04), 0 8px 24px -12px rgb(16 35 26 / 0.18);
+  --shadow-lift: 0 2px 4px rgb(16 35 26 / 0.05), 0 22px 40px -18px rgb(16 35 26 / 0.35);
+
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-fade-in: fade-in 0.4s ease both;
+  --animate-scale-in: scale-in 0.25s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-hero-zoom: hero-zoom 18s ease-out forwards;
+
+  @keyframes hero-zoom {
+    from { transform: scale(1.12); }
+    to { transform: scale(1.02); }
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes scale-in {
+    from { opacity: 0; transform: scale(0.96) translateY(6px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+}
+
+/* Used by inline styles (story progress bars), so it lives outside @theme and is always emitted. */
+@keyframes story-progress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-mist font-sans text-ink antialiased;
+  }
+  ::selection {
+    @apply bg-leaf-300 text-forest-950;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-forest-600;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0.55;
+    cursor: pointer;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+  .eyebrow {
+    @apply text-[11px] font-bold tracking-[0.22em] text-forest-600 uppercase;
+  }
+  .btn-primary,
+  .btn-light,
+  .btn-outline {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition duration-200 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60;
+  }
+  .btn-primary {
+    @apply bg-forest-900 text-white hover:bg-forest-700;
+  }
+  .btn-light {
+    @apply bg-white text-forest-950 hover:bg-leaf-200;
+  }
+  .btn-outline {
+    @apply border border-forest-900/15 bg-white text-forest-900 hover:border-forest-900/40;
+  }
+  .field {
+    @apply w-full rounded-xl border border-forest-900/10 bg-mist px-4 py-3 text-sm text-ink placeholder:text-ink/40 transition outline-none focus:border-forest-600 focus:bg-white focus:ring-4 focus:ring-forest-600/10;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
